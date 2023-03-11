@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 :root {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
 }
 * {
@@ -17,15 +17,18 @@ body {
   grid-template-rows: 1fr 10fr;
 }
 
+li {
+  list-style: none;
+}
+
 /* HEADER SECTION */
 
-header {
+.header {
   grid-area: 1 / 1 / 2 / 3;
   background-color: rgba(0, 0, 0, 0.808);
 }
 
 .header-title {
-  font-family: 'Roboto', sans-serif;
   font-weight: 900;
   font-size: 2rem;
   color: white;
@@ -38,11 +41,51 @@ header {
 .sidebar {
   grid-area: 2 / 1 / 3 / 2;
   background-color: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.sidebar * {
+  margin-bottom: 0.5rem;
+}
+
+.project-item {
+  font-size: 1.2rem;
+  display: grid;
+  grid-template-columns: 1.2rem auto;
+  align-items: center;
+  gap: 0.6rem;
+  line-height: 1.1;
+}
+
+.project-item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.288);
 }
 
 /* MAIN SECTION */
 
-main {
+.main {
   grid-area: 2 / 2 / 3 / 3;
   background-color: rgba(0, 0, 0, 0.336);
+  padding: 2rem 3rem;
+}
+
+.main-header {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.task-item {
+  font-size: 1.2rem;
+  display: grid;
+  grid-template-columns: 1rem auto;
+  gap: 0.6rem;
+  line-height: 0.8;
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 0, 0, 0.123);
+}
+.task-item:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.411);
 }
