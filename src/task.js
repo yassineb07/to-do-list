@@ -14,4 +14,9 @@ function getUserInput() {
   return Task(title, disc);
 }
 
-export default getUserInput;
+function clearFields() {
+  document.getElementById('title').value = '';
+  document.getElementById('disc').value = '';
+}
+
+export { getUserInput, clearFields };

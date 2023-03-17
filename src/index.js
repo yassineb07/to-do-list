@@ -1,5 +1,5 @@
 import { addProject, addTask } from './dom';
-import getUserInput from './task';
+import { getUserInput, clearFields } from './task';
 
 function toggleForm() {
   const form = document.getElementById('form');
@@ -29,4 +29,5 @@ const addTaskBtn = document.getElementById('addTask');
 addTaskBtn.addEventListener('click', (e) => {
   e.preventDefault();
   addTask(getUserInput());
+  clearFields();
 });
