@@ -82,10 +82,13 @@ li {
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
+
 .main-content > *,
 .tasks-list > * {
   margin-bottom: 0.5rem;
 }
+
+/* Task */
 
 .task-item {
   font-size: 1.2rem;
@@ -96,10 +99,22 @@ li {
   padding: 0.5rem 1rem;
   background-color: rgba(0, 0, 0, 0.123);
 }
+
 .task-item:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.534);
 }
+
+.task-title {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.task-disc {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/*  Form */
 
 #form button,
 #form input,
