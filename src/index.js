@@ -1,4 +1,5 @@
 import { addProject, addTask } from './dom';
+import getUserInput from './task';
 
 function toggleForm() {
   const form = document.getElementById('form');
@@ -8,20 +9,24 @@ function toggleForm() {
 const project = document.getElementById('add-project');
 project.addEventListener('click', addProject);
 
-const task = document.getElementById('add-task');
-task.addEventListener('click', () => {
-  task.classList.add('hide');
+// show form
+const formBtn = document.getElementById('formBtn');
+formBtn.addEventListener('click', () => {
+  formBtn.classList.add('hide');
   toggleForm();
 });
 
-const addTaskBtn = document.getElementById('addTask');
-addTaskBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  addTask();
-});
+// hide form
 const cancelTaskBtn = document.getElementById('cancelTask');
 cancelTaskBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  task.classList.remove('hide');
+  formBtn.classList.remove('hide');
   toggleForm();
+});
+
+// Add Task
+const addTaskBtn = document.getElementById('addTask');
+addTaskBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  addTask(getUserInput());
 });
