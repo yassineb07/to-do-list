@@ -101,14 +101,23 @@ li {
 }
 
 .task-item:hover {
-  cursor: pointer;
   background-color: rgba(0, 0, 0, 0.534);
+}
+
+.task-item.check {
+  text-decoration: line-through;
+}
+
+.task-content {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 0.5rem;
 }
 
 .task-title {
   font-weight: 500;
-  margin-bottom: 0.5rem;
 }
+
 .task-disc {
   font-size: 1rem;
   opacity: 0.9;

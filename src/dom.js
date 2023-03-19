@@ -27,21 +27,30 @@ function addProject() {
 // task
 function createTask(taskObj) {
   const task = document.createElement('li');
-  const icon = document.createElement('img');
-  const todo = document.createElement('div');
-  const title = document.createElement('div');
-  const disc = document.createElement('div');
-
   task.classList.add('task-item');
 
+  const icon = document.createElement('img');
   icon.classList.add('task-icon');
   const path = '../dist/icons';
   icon.src = `${path}/checkboxEmpty.svg`;
+  icon.addEventListener('click', () => {
+    if (icon.src.endsWith('/checkboxEmpty.svg')) {
+      icon.src = `${path}/checkbox.svg`;
+    } else {
+      icon.src = `${path}/checkboxEmpty.svg`;
+    }
+    task.classList.toggle('check');
+  });
 
-  todo.classList.add('task');
+  const todo = document.createElement('div');
+  todo.classList.add('task-content');
+
+  const title = document.createElement('div');
   title.classList.add('task-title');
-  disc.classList.add('task-disc');
   title.textContent = taskObj.title;
+
+  const disc = document.createElement('div');
+  disc.classList.add('task-disc');
   disc.textContent = taskObj.disc;
 
   todo.appendChild(title);
