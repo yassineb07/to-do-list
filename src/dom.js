@@ -1,5 +1,5 @@
 // project
-function createProject() {
+function createProject(projectObj) {
   const project = document.createElement('li');
   const icon = document.createElement('img');
   const name = document.createElement('div');
@@ -11,7 +11,7 @@ function createProject() {
   icon.src = `${path}/project.svg`;
 
   name.classList.add('project');
-  name.textContent = 'home';
+  name.textContent = projectObj.name;
 
   project.appendChild(icon);
   project.appendChild(name);
@@ -19,9 +19,9 @@ function createProject() {
   return project;
 }
 
-function addProject() {
+function addProject(projectObj) {
   const projectsList = document.getElementById('projectsList');
-  projectsList.appendChild(createProject());
+  projectsList.appendChild(createProject(projectObj));
 }
 
 // task

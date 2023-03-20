@@ -19,7 +19,14 @@
       <section class="new-projects">
         <p class="title">Projects</p>
         <ul id="projectsList" class="projects-list"></ul>
-        <div class="project-item" id="add-project">
+        <form action="" id="projectForm">
+          <input id="name" type="text" placeholder="name" />
+          <div class="project-btns">
+            <button id="addProject">Add</button>
+            <button id="cancelProject">Cancel</button>
+          </div>
+        </form>
+        <div class="project-item" id="projectBtn">
           <img src="./icons/addproject.svg" alt="icon" class="project-icon" />
           <div class="project-name">Add Project</div>
         </div>
@@ -29,7 +36,7 @@
       <header class="main-header">Title</header>
       <section class="main-content">
         <ul id="tasksList" class="tasks-list"></ul>
-        <form action="" id="form">
+        <form action="" id="taskForm">
           <input id="title" type="text" placeholder="task" />
           <textarea id="disc" placeholder="description"></textarea>
           <div class="form-btns">

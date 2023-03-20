@@ -45,7 +45,9 @@ li {
   font-size: 1.5rem;
   font-weight: 700;
 }
-.sidebar * {
+.sidebar > *,
+.new-projects > *,
+.projects-list > * {
   margin-bottom: 0.5rem;
 }
 
@@ -56,10 +58,10 @@ li {
   align-items: center;
   gap: 0.6rem;
   line-height: 1.1;
+  padding: 0.2rem 0;
 }
 
 .project-item:hover {
-  cursor: pointer;
   background-color: rgba(0, 0, 0, 0.288);
 }
 
@@ -67,6 +69,7 @@ li {
 .task-icon {
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 
 /* MAIN SECTION */
@@ -125,34 +128,62 @@ li {
 
 /*  Form */
 
-#form button,
-#form input,
-#form select,
-#form textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   font-size: 100%;
 }
 
-#form {
+.hide {
+  display: none;
+}
+
+/* project form */
+
+#projectForm {
+  display: none;
+  width: 80%;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+#projectForm.show {
+  display: block;
+}
+
+#projectForm input {
+  width: 100%;
+  margin-bottom: 0.3rem;
+}
+
+#projectForm button {
+  padding: 0.2rem 0.4rem;
+  border: none;
+  border-radius: 4px;
+  background-color: rgb(150, 33, 33);
+  color: white;
+}
+
+/* Task form */
+#taskForm {
   display: none;
   background-color: white;
   border: 1px black solid;
   border-radius: 4px;
   padding: 0.5rem 1rem;
 }
-
-#form.show {
+#taskForm.show {
   display: block;
 }
-.hide {
-  display: none;
-}
-
-#form > * {
+#taskForm > * {
   width: 100%;
 }
 
-#form textarea {
+#taskForm textarea {
   resize: none;
 }
 .form-btns {

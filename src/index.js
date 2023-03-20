@@ -1,27 +1,48 @@
 import { addProject, addTask } from './dom';
 import { getUserInput, clearFields } from './task';
+import { getProjectInput, clearProjectForm } from './project';
 
-function toggleForm() {
-  const form = document.getElementById('form');
+function toggleForm(id) {
+  const form = document.getElementById(id);
   form.classList.toggle('show');
 }
 
-const project = document.getElementById('add-project');
-project.addEventListener('click', addProject);
-
-// show form
-const formBtn = document.getElementById('formBtn');
-formBtn.addEventListener('click', () => {
-  formBtn.classList.add('hide');
-  toggleForm();
+// show project form
+const projectFormBtn = document.getElementById('projectBtn');
+projectFormBtn.addEventListener('click', () => {
+  projectFormBtn.classList.add('hide');
+  toggleForm('projectForm');
 });
 
-// hide form
+// hide project form
+const cancelProjectBtn = document.getElementById('cancelProject');
+cancelProjectBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  projectFormBtn.classList.remove('hide');
+  toggleForm('projectForm');
+});
+
+// Add project
+const addProjectBtn = document.getElementById('addProject');
+addProjectBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  addProject(getProjectInput());
+  clearProjectForm();
+});
+
+// show task form
+const taskFormBtn = document.getElementById('formBtn');
+taskFormBtn.addEventListener('click', () => {
+  taskFormBtn.classList.add('hide');
+  toggleForm('taskForm');
+});
+
+// hide task form
 const cancelTaskBtn = document.getElementById('cancelTask');
 cancelTaskBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  formBtn.classList.remove('hide');
-  toggleForm();
+  taskFormBtn.classList.remove('hide');
+  toggleForm('taskForm');
 });
 
 // Add Task
