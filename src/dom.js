@@ -1,3 +1,5 @@
+import { projList } from './project';
+
 // project
 function createProject(projectObj) {
   const project = document.createElement('li');
@@ -5,6 +7,7 @@ function createProject(projectObj) {
   const name = document.createElement('div');
 
   project.classList.add('project-item');
+  project.dataset.projectId = projectObj.id;
 
   icon.classList.add('project-icon');
   const path = '../dist/icons';
@@ -19,9 +22,22 @@ function createProject(projectObj) {
   return project;
 }
 
-function addProject(projectObj) {
+function renderProjectList() {
   const projectsList = document.getElementById('projectsList');
-  projectsList.appendChild(createProject(projectObj));
+  projList.forEach((project) => {
+    projectsList.appendChild(createProject(project));
+  });
+}
+
+function clearProjectList() {
+  const projectsList = document.getElementById('projectsList');
+  while (projectsList.firstChild) {
+    projectsList.removeChild(projectsList.firstChild);
+  }
+}
+
+function clearProjectForm() {
+  document.getElementById('name').value = '';
 }
 
 // task
@@ -66,4 +82,4 @@ function addTask(taskObj) {
   const tasksList = document.getElementById('tasksList');
   tasksList.appendChild(createTask(taskObj));
 }
-export { addProject, addTask };
+export { renderProjectList, clearProjectList, clearProjectForm, addTask };

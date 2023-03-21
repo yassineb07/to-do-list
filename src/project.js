@@ -1,16 +1,20 @@
+const projList = [];
+
 // create project obj
 function Project(name) {
-  return { name };
+  const tasks = [];
+  const id = Date.now().toString();
+  return { id, name, tasks };
 }
 
 // get user input
 function getProjectInput() {
-  const name = document.getElementById('name').value;
-  return Project(name);
+  return document.getElementById('name').value;
 }
 
-function clearProjectForm() {
-  document.getElementById('name').value = '';
+function addProject() {
+  const project = Project(getProjectInput());
+  projList.push(project);
 }
 
-export { getProjectInput, clearProjectForm };
+export { projList, addProject };

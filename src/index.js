@@ -1,6 +1,11 @@
-import { addProject, addTask } from './dom';
+import {
+  renderProjectList,
+  clearProjectList,
+  clearProjectForm,
+  addTask,
+} from './dom';
 import { getUserInput, clearFields } from './task';
-import { getProjectInput, clearProjectForm } from './project';
+import { addProject } from './project';
 
 function toggleForm(id) {
   const form = document.getElementById(id);
@@ -26,7 +31,9 @@ cancelProjectBtn.addEventListener('click', (e) => {
 const addProjectBtn = document.getElementById('addProject');
 addProjectBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  addProject(getProjectInput());
+  addProject();
+  clearProjectList();
+  renderProjectList();
   clearProjectForm();
 });
 
