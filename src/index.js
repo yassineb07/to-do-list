@@ -1,16 +1,11 @@
-import {
-  renderProjectList,
-  clearProjectList,
-  clearProjectForm,
-  addTask,
-} from './dom';
-import { getUserInput, clearFields } from './task';
+import { loadProject, renderProjects } from './dom';
+import { toggleForm, clearProjectsForm } from './form';
 import { addProject } from './project';
 
-function toggleForm(id) {
-  const form = document.getElementById(id);
-  form.classList.toggle('show');
+function init() {
+  loadProject('inbox');
 }
+init();
 
 // show project form
 const projectFormBtn = document.getElementById('projectBtn');
@@ -28,13 +23,12 @@ cancelProjectBtn.addEventListener('click', (e) => {
 });
 
 // Add project
-const addProjectBtn = document.getElementById('addProject');
-addProjectBtn.addEventListener('click', (e) => {
+const projectForm = document.getElementById('projectForm');
+projectForm.addEventListener('submit', (e) => {
   e.preventDefault();
   addProject();
-  clearProjectList();
-  renderProjectList();
-  clearProjectForm();
+  renderProjects();
+  clearProjectsForm();
 });
 
 // show task form
@@ -50,12 +44,4 @@ cancelTaskBtn.addEventListener('click', (e) => {
   e.preventDefault();
   taskFormBtn.classList.remove('hide');
   toggleForm('taskForm');
-});
-
-// Add Task
-const addTaskBtn = document.getElementById('addTask');
-addTaskBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  addTask(getUserInput());
-  clearFields();
 });

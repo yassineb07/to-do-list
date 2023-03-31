@@ -37,6 +37,9 @@ li {
 }
 
 /* SIDEBAR SECTION */
+.active-project {
+  transform: scale(1.1);
+}
 
 .sidebar {
   grid-area: 2 / 1 / 3 / 2;
@@ -51,6 +54,9 @@ li {
   margin-bottom: 0.5rem;
 }
 
+.sidebar-item:hover {
+  background-color: rgba(0, 0, 0, 0.288);
+}
 .project-item {
   font-size: 1.2rem;
   display: grid;
@@ -80,7 +86,7 @@ li {
   padding: 2rem 10rem;
 }
 
-.main-header {
+.main-title {
   font-size: 2rem;
   font-weight: 600;
   margin-bottom: 0.5rem;

@@ -1,4 +1,14 @@
-const projList = [];
+const projList = [
+  {
+    id: 'inbox',
+    name: 'Inbox',
+    tasks: [
+      { title: 'task1', disc: 'something' },
+      { title: 'task2' },
+      { title: 'task3' },
+    ],
+  },
+];
 
 // create project obj
 function Project(name) {
@@ -12,6 +22,7 @@ function getProjectInput() {
   return document.getElementById('name').value;
 }
 
+// add project
 function addProject() {
   const project = Project(getProjectInput());
   projList.push(project);

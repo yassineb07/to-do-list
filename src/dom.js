@@ -1,13 +1,26 @@
 import { projList } from './project';
+import addTask from './task';
+import { clearTaskForm } from './form';
 
-// project
-function createProject(projectObj) {
+let currentProjectId;
+
+const inbox = document.getElementById('inbox');
+inbox.addEventListener('click', (e) => {
+  loadProject('inbox');
+});
+// create project item
+function createProjectItem(projectObj) {
   const project = document.createElement('li');
   const icon = document.createElement('img');
   const name = document.createElement('div');
 
   project.classList.add('project-item');
   project.dataset.projectId = projectObj.id;
+  project.addEventListener('click', (e) => {
+    console.log(e.currentTarget);
+    currentProjectId = e.currentTarget.dataset.projectId;
+    loadProject(currentProjectId);
+  });
 
   icon.classList.add('project-icon');
   const path = '../dist/icons';
@@ -22,26 +35,30 @@ function createProject(projectObj) {
   return project;
 }
 
-function renderProjectList() {
-  const projectsList = document.getElementById('projectsList');
+const projectsList = document.getElementById('projectsList');
+
+// render list of projects
+function renderProjectsList() {
   projList.forEach((project) => {
-    projectsList.appendChild(createProject(project));
+    if (project.id === 'inbox') return;
+    const item = createProjectItem(project);
+    projectsList.appendChild(item);
   });
 }
 
-function clearProjectList() {
-  const projectsList = document.getElementById('projectsList');
+function clearProjectsList() {
   while (projectsList.firstChild) {
     projectsList.removeChild(projectsList.firstChild);
   }
 }
 
-function clearProjectForm() {
-  document.getElementById('name').value = '';
+function renderProjects() {
+  clearProjectsList();
+  renderProjectsList();
 }
 
-// task
-function createTask(taskObj) {
+//  create task item
+function createTaskItem(taskObj) {
   const task = document.createElement('li');
   task.classList.add('task-item');
 
@@ -78,8 +95,43 @@ function createTask(taskObj) {
   return task;
 }
 
-function addTask(taskObj) {
+function renderTasksList(list) {
   const tasksList = document.getElementById('tasksList');
-  tasksList.appendChild(createTask(taskObj));
+  list.forEach((task) => {
+    tasksList.appendChild(createTaskItem(task));
+  });
 }
-export { renderProjectList, clearProjectList, clearProjectForm, addTask };
+
+function clearTasksList() {
+  const tasksList = document.getElementById('tasksList');
+  while (tasksList.firstChild) {
+    tasksList.removeChild(tasksList.firstChild);
+  }
+}
+
+function renderTasks(list) {
+  clearTasksList();
+  renderTasksList(list);
+}
+
+// load project
+function loadProject(id) {
+  const projectObj = projList.find((project) => project.id === id);
+  const title = document.getElementById('mainTitle');
+  title.textContent = projectObj.name;
+  renderTasks(projectObj.tasks);
+}
+
+// Add Task
+const taskForm = document.getElementById('taskForm');
+taskForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const projectObj = projList.find(
+    (project) => project.id === currentProjectId
+  );
+  addTask(projectObj);
+  renderTasks(projectObj.tasks);
+  clearTaskForm();
+});
+
+export { renderProjects, loadProject };
