@@ -1,3 +1,4 @@
+// projects list
 const projList = [
   {
     id: 'inbox',

@@ -1,13 +1,11 @@
-import { loadProject, renderProjects } from './dom';
-import { toggleForm, clearProjectsForm } from './form';
-import { addProject } from './project';
+import { loadProject } from './dom';
 
 function init() {
   loadProject('inbox');
 }
 init();
 
-// show project form
+/* // show project form
 const projectFormBtn = document.getElementById('projectBtn');
 projectFormBtn.addEventListener('click', () => {
   projectFormBtn.classList.add('hide');
@@ -20,18 +18,18 @@ cancelProjectBtn.addEventListener('click', (e) => {
   e.preventDefault();
   projectFormBtn.classList.remove('hide');
   toggleForm('projectForm');
-});
+}); */
 
-// Add project
+/* // Add project
 const projectForm = document.getElementById('projectForm');
 projectForm.addEventListener('submit', (e) => {
   e.preventDefault();
   addProject();
   renderProjects();
   clearProjectsForm();
-});
+}); */
 
-// show task form
+/* // show task form
 const taskFormBtn = document.getElementById('formBtn');
 taskFormBtn.addEventListener('click', () => {
   taskFormBtn.classList.add('hide');
@@ -44,4 +42,4 @@ cancelTaskBtn.addEventListener('click', (e) => {
   e.preventDefault();
   taskFormBtn.classList.remove('hide');
   toggleForm('taskForm');
-});
+}); */

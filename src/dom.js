@@ -1,13 +1,11 @@
-import { projList } from './project';
+import { projList, addProject } from './project';
 import addTask from './task';
-import { clearTaskForm } from './form';
+import { clearProjectsForm, clearTaskForm } from './form';
 
-let currentProjectId;
+let currentProjectId = 'inbox';
 
-const inbox = document.getElementById('inbox');
-inbox.addEventListener('click', (e) => {
-  loadProject('inbox');
-});
+// Project
+
 // create project item
 function createProjectItem(projectObj) {
   const project = document.createElement('li');
@@ -17,7 +15,7 @@ function createProjectItem(projectObj) {
   project.classList.add('project-item');
   project.dataset.projectId = projectObj.id;
   project.addEventListener('click', (e) => {
-    console.log(e.currentTarget);
+    console.log(e.currentTarget.dataset.projectId);
     currentProjectId = e.currentTarget.dataset.projectId;
     loadProject(currentProjectId);
   });
@@ -38,6 +36,7 @@ function createProjectItem(projectObj) {
 const projectsList = document.getElementById('projectsList');
 
 // render list of projects
+
 function renderProjectsList() {
   projList.forEach((project) => {
     if (project.id === 'inbox') return;
@@ -56,6 +55,8 @@ function renderProjects() {
   clearProjectsList();
   renderProjectsList();
 }
+
+// Task
 
 //  create task item
 function createTaskItem(taskObj) {
@@ -95,6 +96,8 @@ function createTaskItem(taskObj) {
   return task;
 }
 
+// renders list of tasks
+
 function renderTasksList(list) {
   const tasksList = document.getElementById('tasksList');
   list.forEach((task) => {
@@ -121,6 +124,25 @@ function loadProject(id) {
   title.textContent = projectObj.name;
   renderTasks(projectObj.tasks);
 }
+
+// add event listeners
+
+// inbox
+const inbox = document.getElementById('inbox');
+inbox.addEventListener('click', (e) => {
+  console.log(e.currentTarget.id);
+  currentProjectId = e.currentTarget.id;
+  loadProject(currentProjectId);
+});
+
+// Add project
+const projectForm = document.getElementById('projectForm');
+projectForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  addProject();
+  renderProjects();
+  clearProjectsForm();
+});
 
 // Add Task
 const taskForm = document.getElementById('taskForm');
