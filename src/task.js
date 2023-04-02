@@ -1,8 +1,7 @@
 // create task object
 function Task(title, disc) {
   const id = Date.now().toString();
-  const complete = false;
-  return { id, title, disc, complete };
+  return { id, title, disc, complete: false };
 }
 
 // get user input
@@ -19,4 +18,12 @@ function addTask(projectObj) {
   projectObj.tasks.push(task);
 }
 
-export default addTask;
+function completeTask(taskObj) {
+  if (taskObj.complete) {
+    taskObj.complete = false;
+  } else {
+    taskObj.complete = true;
+  }
+}
+
+export { addTask, completeTask };

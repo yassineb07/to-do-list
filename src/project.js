@@ -5,7 +5,7 @@ const projList = [
     name: 'Inbox',
     tasks: [
       { title: 'task1', disc: 'something' },
-      { title: 'task2' },
+      { title: 'task2', complete: true },
       { title: 'task3' },
     ],
   },

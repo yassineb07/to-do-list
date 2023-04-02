@@ -1,5 +1,5 @@
 import { projList, addProject } from './project';
-import addTask from './task';
+import { addTask, completeTask } from './task';
 import { clearProjectsForm, clearTaskForm } from './form';
 
 let currentProjectId = 'inbox';
@@ -65,16 +65,26 @@ function createTaskItem(taskObj) {
 
   const icon = document.createElement('img');
   icon.classList.add('task-icon');
+  icon.id = taskObj.id;
   const path = '../dist/icons';
-  icon.src = `${path}/checkboxEmpty.svg`;
-  icon.addEventListener('click', () => {
-    if (icon.src.endsWith('/checkboxEmpty.svg')) {
+  if (taskObj.complete) {
+    icon.src = `${path}/checkbox.svg`;
+    task.classList.add('check');
+  } else {
+    icon.src = `${path}/checkboxEmpty.svg`;
+    task.classList.remove('check');
+  }
+  /*   icon.addEventListener('click', (e) => {
+    console.log(e.target);
+
+      if (icon.src.endsWith('/checkboxEmpty.svg')) {
       icon.src = `${path}/checkbox.svg`;
     } else {
       icon.src = `${path}/checkboxEmpty.svg`;
-    }
-    task.classList.toggle('check');
-  });
+    } 
+
+     task.classList.toggle('check');
+  }); */
 
   const todo = document.createElement('div');
   todo.classList.add('task-content');
@@ -139,6 +149,7 @@ inbox.addEventListener('click', (e) => {
 const projectForm = document.getElementById('projectForm');
 projectForm.addEventListener('submit', (e) => {
   e.preventDefault();
+  if (document.getElementById('name').value === '') return;
   addProject();
   renderProjects();
   clearProjectsForm();
@@ -148,12 +159,24 @@ projectForm.addEventListener('submit', (e) => {
 const taskForm = document.getElementById('taskForm');
 taskForm.addEventListener('submit', (e) => {
   e.preventDefault();
+  if (document.getElementById('title').value === '') return;
   const projectObj = projList.find(
     (project) => project.id === currentProjectId
   );
   addTask(projectObj);
   renderTasks(projectObj.tasks);
   clearTaskForm();
+});
+
+// Task complete
+const tasksListEl = document.getElementById('tasksList');
+tasksListEl.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === 'img') {
+    const proj = projList.find((project) => project.id === currentProjectId);
+    const task = proj.tasks.find((taskEl) => taskEl.id === e.target.id);
+    completeTask(task);
+    loadProject(currentProjectId);
+  }
 });
 
 export { renderProjects, loadProject };
