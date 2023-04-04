@@ -1,4 +1,4 @@
-import { projList, addProject } from './project';
+import { projList, addProject, deleteProject } from './project';
 import { addTask, completeTask } from './task';
 import { clearProjectsForm, clearTaskForm } from './form';
 
@@ -11,14 +11,11 @@ function createProjectItem(projectObj) {
   const project = document.createElement('li');
   const icon = document.createElement('img');
   const name = document.createElement('div');
+  const deleteIcon = document.createElement('img');
 
+  project.id = 'projectItem';
   project.classList.add('project-item');
   project.dataset.projectId = projectObj.id;
-  project.addEventListener('click', (e) => {
-    console.log(e.currentTarget.dataset.projectId);
-    currentProjectId = e.currentTarget.dataset.projectId;
-    loadProject(currentProjectId);
-  });
 
   icon.classList.add('project-icon');
   const path = '../dist/icons';
@@ -27,17 +24,21 @@ function createProjectItem(projectObj) {
   name.classList.add('project');
   name.textContent = projectObj.name;
 
+  deleteIcon.id = 'deleteProject';
+  deleteIcon.classList.add('project-icon');
+  deleteIcon.src = `${path}/delete.svg`;
+
+  name.appendChild(deleteIcon);
   project.appendChild(icon);
   project.appendChild(name);
 
   return project;
 }
 
-const projectsList = document.getElementById('projectsList');
-
 // render list of projects
 
 function renderProjectsList() {
+  const projectsList = document.getElementById('projectsList');
   projList.forEach((project) => {
     if (project.id === 'inbox') return;
     const item = createProjectItem(project);
@@ -46,6 +47,7 @@ function renderProjectsList() {
 }
 
 function clearProjectsList() {
+  const projectsList = document.getElementById('projectsList');
   while (projectsList.firstChild) {
     projectsList.removeChild(projectsList.firstChild);
   }
@@ -74,17 +76,6 @@ function createTaskItem(taskObj) {
     icon.src = `${path}/checkboxEmpty.svg`;
     task.classList.remove('check');
   }
-  /*   icon.addEventListener('click', (e) => {
-    console.log(e.target);
-
-      if (icon.src.endsWith('/checkboxEmpty.svg')) {
-      icon.src = `${path}/checkbox.svg`;
-    } else {
-      icon.src = `${path}/checkboxEmpty.svg`;
-    } 
-
-     task.classList.toggle('check');
-  }); */
 
   const todo = document.createElement('div');
   todo.classList.add('task-content');
@@ -130,6 +121,7 @@ function renderTasks(list) {
 // load project
 function loadProject(id) {
   const projectObj = projList.find((project) => project.id === id);
+  if (typeof projectObj !== 'object') return;
   const title = document.getElementById('mainTitle');
   title.textContent = projectObj.name;
   renderTasks(projectObj.tasks);
@@ -140,9 +132,18 @@ function loadProject(id) {
 // inbox
 const inbox = document.getElementById('inbox');
 inbox.addEventListener('click', (e) => {
-  console.log(e.currentTarget.id);
   currentProjectId = e.currentTarget.id;
   loadProject(currentProjectId);
+});
+
+// project
+const projectListEl = document.getElementById('projectsList');
+
+projectListEl.addEventListener('click', (e) => {
+  if (e.target.id !== 'projectsList' && e.target.id !== 'deleteProject') {
+    currentProjectId = e.target.parentElement.dataset.projectId;
+    loadProject(currentProjectId);
+  }
 });
 
 // Add project
@@ -153,6 +154,17 @@ projectForm.addEventListener('submit', (e) => {
   addProject();
   renderProjects();
   clearProjectsForm();
+});
+
+// delete project
+projectListEl.addEventListener('click', (e) => {
+  if (e.target.id === 'deleteProject') {
+    const selectedProj = e.target.parentElement.parentElement;
+    deleteProject(selectedProj.dataset.projectId);
+    renderProjects();
+    currentProjectId = projList[0].id;
+    loadProject(currentProjectId);
+  }
 });
 
 // Add Task

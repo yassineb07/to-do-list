@@ -57,6 +57,7 @@ li {
 .sidebar-item:hover {
   background-color: rgba(0, 0, 0, 0.288);
 }
+
 .project-item {
   font-size: 1.2rem;
   display: grid;
@@ -69,6 +70,12 @@ li {
 
 .project-item:hover {
   background-color: rgba(0, 0, 0, 0.288);
+}
+
+.project {
+  padding-right: 0.3rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .project-icon,

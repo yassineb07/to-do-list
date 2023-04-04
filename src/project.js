@@ -4,9 +4,9 @@ const projList = [
     id: 'inbox',
     name: 'Inbox',
     tasks: [
-      { title: 'task1', disc: 'something' },
+      /*       { title: 'task1', disc: 'something' },
       { title: 'task2', complete: true },
-      { title: 'task3' },
+      { title: 'task3' }, */
     ],
   },
 ];
@@ -29,4 +29,10 @@ function addProject() {
   projList.push(project);
 }
 
-export { projList, addProject };
+// delete project
+function deleteProject(id) {
+  const projectIndex = projList.findIndex((projectEl) => projectEl.id === id);
+  projList.splice(projectIndex, 1);
+}
+
+export { projList, addProject, deleteProject };
