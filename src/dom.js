@@ -1,5 +1,5 @@
 import { projList, addProject, deleteProject } from './project';
-import { addTask, completeTask } from './task';
+import { addTask, deleteTask, completeTask } from './task';
 import { clearProjectsForm, clearTaskForm } from './form';
 
 let currentProjectId = 'inbox';
@@ -67,7 +67,8 @@ function createTaskItem(taskObj) {
 
   const icon = document.createElement('img');
   icon.classList.add('task-icon');
-  icon.id = taskObj.id;
+  icon.id = 'checkbox';
+  icon.dataset.taskId = taskObj.id;
   const path = '../dist/icons';
   if (taskObj.complete) {
     icon.src = `${path}/checkbox.svg`;
@@ -84,9 +85,16 @@ function createTaskItem(taskObj) {
   title.classList.add('task-title');
   title.textContent = taskObj.title;
 
+  const deleteIcon = document.createElement('img');
+  deleteIcon.id = 'deleteTask';
+  deleteIcon.classList.add('task-icon');
+  deleteIcon.src = `${path}/delete.svg`;
+
   const disc = document.createElement('div');
   disc.classList.add('task-disc');
   disc.textContent = taskObj.disc;
+
+  title.appendChild(deleteIcon);
 
   todo.appendChild(title);
   todo.appendChild(disc);
@@ -136,7 +144,7 @@ inbox.addEventListener('click', (e) => {
   loadProject(currentProjectId);
 });
 
-// project
+// project items
 const projectListEl = document.getElementById('projectsList');
 
 projectListEl.addEventListener('click', (e) => {
@@ -167,7 +175,7 @@ projectListEl.addEventListener('click', (e) => {
   }
 });
 
-// Add Task
+// Add task
 const taskForm = document.getElementById('taskForm');
 taskForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -180,15 +188,26 @@ taskForm.addEventListener('submit', (e) => {
   clearTaskForm();
 });
 
-// Task complete
+// delete task
 const tasksListEl = document.getElementById('tasksList');
 tasksListEl.addEventListener('click', (e) => {
-  if (e.target.tagName.toLowerCase() === 'img') {
+  if (e.target.id === 'deleteTask') {
     const proj = projList.find((project) => project.id === currentProjectId);
-    const task = proj.tasks.find((taskEl) => taskEl.id === e.target.id);
+    deleteTask(proj, e.target.dataset.taskId);
+    loadProject(currentProjectId);
+  }
+});
+
+// Task complete
+tasksListEl.addEventListener('click', (e) => {
+  if (e.target.id === 'checkbox') {
+    const proj = projList.find((project) => project.id === currentProjectId);
+    const task = proj.tasks.find(
+      (taskEl) => taskEl.id === e.target.dataset.taskId
+    );
     completeTask(task);
     loadProject(currentProjectId);
   }
 });
 
-export { renderProjects, loadProject };
+export default loadProject;

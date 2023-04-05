@@ -18,6 +18,13 @@ function addTask(projectObj) {
   projectObj.tasks.push(task);
 }
 
+// delete task
+function deleteTask(projectObj, id) {
+  const taskIndex = projectObj.tasks.findIndex((taskEl) => taskEl.id === id);
+  projectObj.tasks.splice(taskIndex, 1);
+}
+
+// complete task
 function completeTask(taskObj) {
   if (taskObj.complete) {
     taskObj.complete = false;
@@ -26,4 +33,4 @@ function completeTask(taskObj) {
   }
 }
 
-export { addTask, completeTask };
+export { addTask, deleteTask, completeTask };

@@ -132,6 +132,9 @@ li {
 
 .task-title {
   font-weight: 500;
+  padding: 0 0.4rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .task-disc {

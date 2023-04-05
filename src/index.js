@@ -1,4 +1,4 @@
-import { loadProject } from './dom';
+import loadProject from './dom';
 
 function init() {
   loadProject('inbox');

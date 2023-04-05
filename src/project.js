@@ -3,11 +3,7 @@ const projList = [
   {
     id: 'inbox',
     name: 'Inbox',
-    tasks: [
-      /*       { title: 'task1', disc: 'something' },
-      { title: 'task2', complete: true },
-      { title: 'task3' }, */
-    ],
+    tasks: [],
   },
 ];
 
