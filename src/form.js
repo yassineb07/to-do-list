@@ -13,6 +13,7 @@ function clearProjectsForm() {
 function clearTaskForm() {
   document.getElementById('title').value = '';
   document.getElementById('disc').value = '';
+  document.getElementById('dueDate').value = '';
 }
 
 // show project form

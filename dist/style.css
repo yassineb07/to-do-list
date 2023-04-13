@@ -134,7 +134,11 @@ li {
   font-weight: 500;
   padding: 0 0.4rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.task-title > p {
+  margin-left: auto;
 }
 
 .task-disc {
@@ -202,6 +206,11 @@ textarea {
 #taskForm textarea {
   resize: none;
 }
+
+#taskForm input[type='date'] {
+  width: auto;
+}
+
 .form-btns {
   display: flex;
   justify-content: end;

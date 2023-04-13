@@ -65,16 +65,16 @@ function createTaskItem(taskObj) {
   const task = document.createElement('li');
   task.classList.add('task-item');
 
-  const icon = document.createElement('img');
-  icon.classList.add('task-icon');
-  icon.id = 'checkbox';
-  icon.dataset.taskId = taskObj.id;
+  const checkIcon = document.createElement('img');
+  checkIcon.classList.add('task-icon');
+  checkIcon.id = 'checkbox';
+  checkIcon.dataset.taskId = taskObj.id;
   const path = '../dist/icons';
   if (taskObj.complete) {
-    icon.src = `${path}/checkbox.svg`;
+    checkIcon.src = `${path}/checkbox.svg`;
     task.classList.add('check');
   } else {
-    icon.src = `${path}/checkboxEmpty.svg`;
+    checkIcon.src = `${path}/checkboxEmpty.svg`;
     task.classList.remove('check');
   }
 
@@ -90,22 +90,27 @@ function createTaskItem(taskObj) {
   deleteIcon.classList.add('task-icon');
   deleteIcon.src = `${path}/delete.svg`;
 
+  const dueDate = document.createElement('p');
+  dueDate.id = 'dueDateEl';
+  dueDate.textContent = taskObj.dueDate;
+
   const disc = document.createElement('div');
   disc.classList.add('task-disc');
   disc.textContent = taskObj.disc;
 
+  title.appendChild(dueDate);
   title.appendChild(deleteIcon);
 
   todo.appendChild(title);
   todo.appendChild(disc);
 
-  task.appendChild(icon);
+  task.appendChild(checkIcon);
   task.appendChild(todo);
 
   return task;
 }
 
-// renders list of tasks
+// render list of tasks
 
 function renderTasksList(list) {
   const tasksList = document.getElementById('tasksList');
@@ -154,7 +159,7 @@ projectListEl.addEventListener('click', (e) => {
   }
 });
 
-// Add project
+// add project
 const projectForm = document.getElementById('projectForm');
 projectForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -175,7 +180,7 @@ projectListEl.addEventListener('click', (e) => {
   }
 });
 
-// Add task
+// add task
 const taskForm = document.getElementById('taskForm');
 taskForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -198,7 +203,7 @@ tasksListEl.addEventListener('click', (e) => {
   }
 });
 
-// Task complete
+// complete task
 tasksListEl.addEventListener('click', (e) => {
   if (e.target.id === 'checkbox') {
     const proj = projList.find((project) => project.id === currentProjectId);
