@@ -64,11 +64,11 @@ function renderProjects() {
 function createTaskItem(taskObj) {
   const task = document.createElement('li');
   task.classList.add('task-item');
+  task.dataset.taskId = taskObj.id;
 
   const checkIcon = document.createElement('img');
   checkIcon.classList.add('task-icon');
   checkIcon.id = 'checkbox';
-  checkIcon.dataset.taskId = taskObj.id;
   const path = '../dist/icons';
   if (taskObj.complete) {
     checkIcon.src = `${path}/checkbox.svg`;
@@ -198,7 +198,10 @@ const tasksListEl = document.getElementById('tasksList');
 tasksListEl.addEventListener('click', (e) => {
   if (e.target.id === 'deleteTask') {
     const proj = projList.find((project) => project.id === currentProjectId);
-    deleteTask(proj, e.target.dataset.taskId);
+    deleteTask(
+      proj,
+      e.target.parentElement.parentElement.parentElement.dataset.taskId
+    );
     loadProject(currentProjectId);
   }
 });
@@ -208,7 +211,7 @@ tasksListEl.addEventListener('click', (e) => {
   if (e.target.id === 'checkbox') {
     const proj = projList.find((project) => project.id === currentProjectId);
     const task = proj.tasks.find(
-      (taskEl) => taskEl.id === e.target.dataset.taskId
+      (taskEl) => taskEl.id === e.target.parentElement.dataset.taskId
     );
     completeTask(task);
     loadProject(currentProjectId);
