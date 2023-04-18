@@ -1,5 +1,6 @@
+import { format, isValid } from 'date-fns';
 import { projList, addProject, deleteProject } from './project';
-import { addTask, deleteTask, completeTask } from './task';
+import { addTask, deleteTask, completeTask, setDueDate } from './task';
 import { clearProjectsForm, clearTaskForm } from './form';
 
 let currentProjectId = 'inbox';
@@ -85,20 +86,36 @@ function createTaskItem(taskObj) {
   title.classList.add('task-title');
   title.textContent = taskObj.title;
 
+  const disc = document.createElement('div');
+  disc.classList.add('task-disc');
+  disc.textContent = taskObj.disc;
+
   const deleteIcon = document.createElement('img');
   deleteIcon.id = 'deleteTask';
   deleteIcon.classList.add('task-icon');
   deleteIcon.src = `${path}/delete.svg`;
 
-  const dueDate = document.createElement('p');
-  dueDate.id = 'dueDateEl';
-  dueDate.textContent = taskObj.dueDate;
+  const dueDateIcon = document.createElement('img');
+  dueDateIcon.id = 'dueDateIcon';
+  dueDateIcon.classList.add('task-icon');
+  dueDateIcon.src = `${path}/calendar.svg`;
 
-  const disc = document.createElement('div');
-  disc.classList.add('task-disc');
-  disc.textContent = taskObj.disc;
+  const dueDateInput = document.createElement('input');
+  dueDateInput.setAttribute('type', 'date');
+  dueDateInput.id = 'dueDateInput';
+  dueDateInput.style.display = 'none';
 
-  title.appendChild(dueDate);
+  const dueDateEl = document.createElement('p');
+  dueDateEl.id = 'dueDateEl';
+  if (isValid(taskObj.dueDate)) {
+    console.log(`dom date :${taskObj.dueDate}`);
+    dueDateEl.textContent = format(taskObj.dueDate, 'MM/dd/yy');
+    dueDateIcon.style.display = 'none';
+  }
+
+  title.appendChild(dueDateEl);
+  title.appendChild(dueDateInput);
+  title.appendChild(dueDateIcon);
   title.appendChild(deleteIcon);
 
   todo.appendChild(title);
@@ -218,4 +235,30 @@ tasksListEl.addEventListener('click', (e) => {
   }
 });
 
+// show due date input
+tasksListEl.addEventListener('click', (e) => {
+  if (e.target.id === 'dueDateIcon' || e.target.id === 'dueDateEl') {
+    const dateEl = e.target.parentElement.children[0];
+    const dateInput = e.target.parentElement.children[1];
+    const dateIcon = e.target.parentElement.children[2];
+    dateInput.style.display = '';
+    dateEl.textContent = '';
+    dateIcon.style.display = 'none';
+  }
+});
+
+// set due date
+tasksListEl.addEventListener('input', (e) => {
+  if (e.target.id === 'dueDateInput') {
+    console.log(e.target.value);
+    const proj = projList.find((project) => project.id === currentProjectId);
+    const task = proj.tasks.find(
+      (taskEl) =>
+        taskEl.id ===
+        e.target.parentElement.parentElement.parentElement.dataset.taskId
+    );
+    setDueDate(task, e.target.value);
+    loadProject(currentProjectId);
+  }
+});
 export default loadProject;

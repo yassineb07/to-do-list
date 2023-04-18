@@ -1,10 +1,7 @@
 // create task object
 function Task(title, disc, date) {
   const id = Date.now().toString();
-  let dueDate = new Date(date).toDateString();
-  if (dueDate === 'Invalid Date') {
-    dueDate = 'No Date';
-  }
+  const dueDate = new Date(date);
   return { id, title, disc, dueDate, complete: false };
 }
 
@@ -38,4 +35,8 @@ function completeTask(taskObj) {
   }
 }
 
-export { addTask, deleteTask, completeTask };
+// set due date
+function setDueDate(taskObj, date) {
+  taskObj.dueDate = new Date(date);
+}
+export { addTask, deleteTask, completeTask, setDueDate };
