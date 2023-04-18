@@ -135,6 +135,7 @@ li {
   padding: 0 0.4rem;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .task-title > p {
