@@ -103,12 +103,12 @@ function createTaskItem(taskObj) {
   const dueDateInput = document.createElement('input');
   dueDateInput.setAttribute('type', 'date');
   dueDateInput.id = 'dueDateInput';
+  dueDateInput.classList.add('task-input');
   dueDateInput.style.display = 'none';
 
   const dueDateEl = document.createElement('p');
   dueDateEl.id = 'dueDateEl';
   if (isValid(taskObj.dueDate)) {
-    console.log(`dom date :${taskObj.dueDate}`);
     dueDateEl.textContent = format(taskObj.dueDate, 'MM/dd/yy');
     dueDateIcon.style.display = 'none';
   }
@@ -250,7 +250,6 @@ tasksListEl.addEventListener('click', (e) => {
 // set due date
 tasksListEl.addEventListener('input', (e) => {
   if (e.target.id === 'dueDateInput') {
-    console.log(e.target.value);
     const proj = projList.find((project) => project.id === currentProjectId);
     const task = proj.tasks.find(
       (taskEl) =>
@@ -261,4 +260,5 @@ tasksListEl.addEventListener('input', (e) => {
     loadProject(currentProjectId);
   }
 });
+
 export default loadProject;
