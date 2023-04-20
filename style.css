@@ -37,6 +37,7 @@ li {
 }
 
 /* SIDEBAR SECTION */
+
 .active-project {
   transform: scale(1.1);
 }
@@ -140,6 +141,12 @@ li {
 
 .task-title > p {
   margin-left: auto;
+}
+
+.task-input {
+  font-family: inherit;
+  font-size: 1rem;
+  border: 1px solid black;
 }
 
 .task-disc {
