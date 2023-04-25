@@ -1,6 +1,7 @@
-import loadProject from './dom';
+import render from './dom';
+import { getProjectList } from './storage';
 
-function init() {
-  loadProject('inbox');
-}
-init();
+window.addEventListener('load', () => {
+  const list = getProjectList();
+  render(list);
+});

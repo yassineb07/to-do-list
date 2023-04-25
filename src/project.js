@@ -1,10 +1,8 @@
+import { saveProjectsList, getProjectList } from './storage';
 // projects list
-const projList = [
-  {
-    id: 'inbox',
-    name: 'Inbox',
-    tasks: [],
-  },
+
+const projList = getProjectList() || [
+  { id: 'inbox', name: 'Inbox', tasks: [] },
 ];
 
 // create project obj
@@ -23,12 +21,14 @@ function getProjectInput() {
 function addProject() {
   const project = Project(getProjectInput());
   projList.push(project);
+  saveProjectsList(projList);
 }
 
 // delete project
 function deleteProject(id) {
   const projectIndex = projList.findIndex((projectEl) => projectEl.id === id);
   projList.splice(projectIndex, 1);
+  saveProjectsList(projList);
 }
 
 export { projList, addProject, deleteProject };

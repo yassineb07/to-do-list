@@ -2,8 +2,13 @@ import { format, isValid } from 'date-fns';
 import { projList, addProject, deleteProject } from './project';
 import { addTask, deleteTask, completeTask, setDueDate } from './task';
 import { clearProjectsForm, clearTaskForm } from './form';
+import {
+  saveProjectsList,
+  getCurrentProjectId,
+  saveCurrentProjectId,
+} from './storage';
 
-let currentProjectId = 'inbox';
+let currentProjectId = getCurrentProjectId() || 'inbox';
 
 // Project
 
@@ -129,9 +134,10 @@ function createTaskItem(taskObj) {
 
 // render list of tasks
 
-function renderTasksList(list) {
+function renderTasksList(id) {
+  const projectObj = projList.find((project) => project.id === id);
   const tasksList = document.getElementById('tasksList');
-  list.forEach((task) => {
+  projectObj.tasks.forEach((task) => {
     tasksList.appendChild(createTaskItem(task));
   });
 }
@@ -143,9 +149,9 @@ function clearTasksList() {
   }
 }
 
-function renderTasks(list) {
+function renderTasks(id) {
   clearTasksList();
-  renderTasksList(list);
+  renderTasksList(id);
 }
 
 // load project
@@ -154,7 +160,12 @@ function loadProject(id) {
   if (typeof projectObj !== 'object') return;
   const title = document.getElementById('mainTitle');
   title.textContent = projectObj.name;
-  renderTasks(projectObj.tasks);
+  renderTasks(id);
+}
+
+function render() {
+  renderProjects();
+  loadProject(getCurrentProjectId());
 }
 
 // add event listeners
@@ -163,6 +174,7 @@ function loadProject(id) {
 const inbox = document.getElementById('inbox');
 inbox.addEventListener('click', (e) => {
   currentProjectId = e.currentTarget.id;
+  saveCurrentProjectId(currentProjectId);
   loadProject(currentProjectId);
 });
 
@@ -172,6 +184,7 @@ const projectListEl = document.getElementById('projectsList');
 projectListEl.addEventListener('click', (e) => {
   if (e.target.id !== 'projectsList' && e.target.id !== 'deleteProject') {
     currentProjectId = e.target.parentElement.dataset.projectId;
+    saveCurrentProjectId(currentProjectId);
     loadProject(currentProjectId);
   }
 });
@@ -193,6 +206,7 @@ projectListEl.addEventListener('click', (e) => {
     deleteProject(selectedProj.dataset.projectId);
     renderProjects();
     currentProjectId = projList[0].id;
+    saveCurrentProjectId(currentProjectId);
     loadProject(currentProjectId);
   }
 });
@@ -206,7 +220,8 @@ taskForm.addEventListener('submit', (e) => {
     (project) => project.id === currentProjectId
   );
   addTask(projectObj);
-  renderTasks(projectObj.tasks);
+  saveProjectsList(projList);
+  loadProject(currentProjectId);
   clearTaskForm();
 });
 
@@ -219,6 +234,7 @@ tasksListEl.addEventListener('click', (e) => {
       proj,
       e.target.parentElement.parentElement.parentElement.dataset.taskId
     );
+    saveProjectsList(projList);
     loadProject(currentProjectId);
   }
 });
@@ -231,6 +247,7 @@ tasksListEl.addEventListener('click', (e) => {
       (taskEl) => taskEl.id === e.target.parentElement.dataset.taskId
     );
     completeTask(task);
+    saveProjectsList(projList);
     loadProject(currentProjectId);
   }
 });
@@ -257,8 +274,9 @@ tasksListEl.addEventListener('input', (e) => {
         e.target.parentElement.parentElement.parentElement.dataset.taskId
     );
     setDueDate(task, e.target.value);
+    saveProjectsList(projList);
     loadProject(currentProjectId);
   }
 });
 
-export default loadProject;
+export default render;
