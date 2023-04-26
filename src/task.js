@@ -1,7 +1,15 @@
+import { format, isValid } from 'date-fns';
+
 // create task object
 function Task(title, disc, date) {
   const id = Date.now().toString();
-  const dueDate = new Date(date);
+  let dueDate = new Date(date);
+  if (isValid(dueDate)) {
+    dueDate = format(dueDate, 'dd/MM/yy');
+  } else {
+    dueDate = null;
+  }
+
   return { id, title, disc, dueDate, complete: false };
 }
 
@@ -37,6 +45,6 @@ function completeTask(taskObj) {
 
 // set due date
 function setDueDate(taskObj, date) {
-  taskObj.dueDate = new Date(date);
+  taskObj.dueDate = format(new Date(date), 'dd/MM/yy');
 }
 export { addTask, deleteTask, completeTask, setDueDate };

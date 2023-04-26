@@ -1,4 +1,3 @@
-import { format, isValid } from 'date-fns';
 import { projList, addProject, deleteProject } from './project';
 import { addTask, deleteTask, completeTask, setDueDate } from './task';
 import { clearProjectsForm, clearTaskForm } from './form';
@@ -43,9 +42,9 @@ function createProjectItem(projectObj) {
 
 // render list of projects
 
-function renderProjectsList() {
+function renderProjectsList(list) {
   const projectsList = document.getElementById('projectsList');
-  projList.forEach((project) => {
+  list.forEach((project) => {
     if (project.id === 'inbox') return;
     const item = createProjectItem(project);
     projectsList.appendChild(item);
@@ -59,9 +58,9 @@ function clearProjectsList() {
   }
 }
 
-function renderProjects() {
+function renderProjects(list) {
   clearProjectsList();
-  renderProjectsList();
+  renderProjectsList(list);
 }
 
 // Task
@@ -113,8 +112,8 @@ function createTaskItem(taskObj) {
 
   const dueDateEl = document.createElement('p');
   dueDateEl.id = 'dueDateEl';
-  if (isValid(taskObj.dueDate)) {
-    dueDateEl.textContent = format(taskObj.dueDate, 'MM/dd/yy');
+  if (!(taskObj.dueDate === null)) {
+    dueDateEl.textContent = taskObj.dueDate;
     dueDateIcon.style.display = 'none';
   }
 
@@ -134,10 +133,10 @@ function createTaskItem(taskObj) {
 
 // render list of tasks
 
-function renderTasksList(id) {
-  const projectObj = projList.find((project) => project.id === id);
+function renderTasksList(list) {
+  // const projectObj = projList.find((project) => project.id === id);
   const tasksList = document.getElementById('tasksList');
-  projectObj.tasks.forEach((task) => {
+  list.forEach((task) => {
     tasksList.appendChild(createTaskItem(task));
   });
 }
@@ -149,23 +148,22 @@ function clearTasksList() {
   }
 }
 
-function renderTasks(id) {
+function renderTasks(list) {
   clearTasksList();
-  renderTasksList(id);
+  renderTasksList(list);
 }
 
 // load project
 function loadProject(id) {
   const projectObj = projList.find((project) => project.id === id);
-  if (typeof projectObj !== 'object') return;
   const title = document.getElementById('mainTitle');
   title.textContent = projectObj.name;
-  renderTasks(id);
+  renderTasks(projectObj.tasks);
 }
 
-function render() {
-  renderProjects();
-  loadProject(getCurrentProjectId());
+function render(list, id) {
+  renderProjects(list);
+  loadProject(id);
 }
 
 // add event listeners
@@ -195,7 +193,7 @@ projectForm.addEventListener('submit', (e) => {
   e.preventDefault();
   if (document.getElementById('name').value === '') return;
   addProject();
-  renderProjects();
+  renderProjects(projList);
   clearProjectsForm();
 });
 
@@ -204,7 +202,7 @@ projectListEl.addEventListener('click', (e) => {
   if (e.target.id === 'deleteProject') {
     const selectedProj = e.target.parentElement.parentElement;
     deleteProject(selectedProj.dataset.projectId);
-    renderProjects();
+    renderProjects(projList);
     currentProjectId = projList[0].id;
     saveCurrentProjectId(currentProjectId);
     loadProject(currentProjectId);
