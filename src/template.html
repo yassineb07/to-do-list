@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TO DO</title>
+  </head>
+  <body>
+    <header id="header" class="header">
+      <div class="header-title">TODO LIST</div>
+    </header>
+    <section id="sidebar" class="sidebar">
+      <section class="default-projects">
+        <div id="inbox" class="sidebar-item">Inbox</div>
+      </section>
+      <section class="new-projects">
+        <p class="title">Projects</p>
+        <ul id="projectsList" class="projects-list"></ul>
+        <form action="" id="projectForm">
+          <input id="name" type="text" placeholder="name" />
+          <div class="project-btns">
+            <button id="addProject">Add</button>
+            <button id="cancelProject">Cancel</button>
+          </div>
+        </form>
+        <div class="project-item" id="projectBtn">
+          <img src="./icons/addproject.svg" alt="icon" class="project-icon" />
+          <div class="project-name">Add Project</div>
+        </div>
+      </section>
+    </section>
+    <main id="main" class="main">
+      <header id="mainTitle" class="main-title">title</header>
+      <section class="main-content">
+        <ul id="tasksList" class="tasks-list"></ul>
+        <form action="" id="taskForm">
+          <input id="title" type="text" placeholder="task" />
+          <textarea id="disc" placeholder="description"></textarea>
+          <label>
+            Due Date :
+            <input id="dueDate" type="date" />
+          </label>
+          <div class="form-btns">
+            <button id="addTask">Add Task</button>
+            <button id="cancelTask">Cancel</button>
+          </div>
+        </form>
+        <div class="task-item" id="formBtn">
+          <img src="./icons/add.svg" alt="icon" class="task-icon" />
+          <div class="task">Add task</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

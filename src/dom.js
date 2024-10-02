@@ -1,3 +1,8 @@
+import calendarIconSrc from './icons/calendar.svg'
+import checkboxIconSrc from './icons/checkbox.svg'
+import checkboxEmptyIconSrc from './icons/checkboxEmpty.svg'
+import deleteIconSrc from './icons/delete.svg'
+import projectIconSrc from './icons/project.svg'
 import { projList, addProject, deleteProject } from './project';
 import { addTask, deleteTask, completeTask, setDueDate } from './task';
 import { clearProjectsForm, clearTaskForm } from './form';
@@ -23,15 +28,14 @@ function createProjectItem(projectObj) {
   project.dataset.projectId = projectObj.id;
 
   icon.classList.add('project-icon');
-  const path = '../dist/icons';
-  icon.src = `${path}/project.svg`;
+  icon.src = projectIconSrc;
 
   name.classList.add('project');
   name.textContent = projectObj.name;
 
   deleteIcon.id = 'deleteProject';
   deleteIcon.classList.add('project-icon');
-  deleteIcon.src = `${path}/delete.svg`;
+  deleteIcon.src = deleteIconSrc;
 
   name.appendChild(deleteIcon);
   project.appendChild(icon);
@@ -74,12 +78,11 @@ function createTaskItem(taskObj) {
   const checkIcon = document.createElement('img');
   checkIcon.classList.add('task-icon');
   checkIcon.id = 'checkbox';
-  const path = '../dist/icons';
   if (taskObj.complete) {
-    checkIcon.src = `${path}/checkbox.svg`;
+    checkIcon.src = checkboxIconSrc;
     task.classList.add('check');
   } else {
-    checkIcon.src = `${path}/checkboxEmpty.svg`;
+    checkIcon.src = checkboxEmptyIconSrc;
     task.classList.remove('check');
   }
 
@@ -97,12 +100,12 @@ function createTaskItem(taskObj) {
   const deleteIcon = document.createElement('img');
   deleteIcon.id = 'deleteTask';
   deleteIcon.classList.add('task-icon');
-  deleteIcon.src = `${path}/delete.svg`;
+  deleteIcon.src = deleteIconSrc;
 
   const dueDateIcon = document.createElement('img');
   dueDateIcon.id = 'dueDateIcon';
   dueDateIcon.classList.add('task-icon');
-  dueDateIcon.src = `${path}/calendar.svg`;
+  dueDateIcon.src = calendarIconSrc;
 
   const dueDateInput = document.createElement('input');
   dueDateInput.setAttribute('type', 'date');
